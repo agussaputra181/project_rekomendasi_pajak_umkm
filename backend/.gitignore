@@ -1,0 +1,13 @@
+# Library hasil npm install
+node_modules/
+
+# Rahasia dan konfigurasi lokal
+.env
+
+# Hasil build dan laporan uji
+dist/
+coverage/
+
+#File sistem
+.DS_Store
+Thumbs.db
