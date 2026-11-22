@@ -8,7 +8,7 @@
     "start": "node server.js",
     "seed": "node src/seed.js",
     "test": "jest --runInBand",
-    "test:unit": "jest --runInBand test/unit"
+    "test:unit": "jest --runInBand tests/unit"
   },
   "keywords": [],
   "author": "",
