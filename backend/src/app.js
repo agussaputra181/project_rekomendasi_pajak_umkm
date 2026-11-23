@@ -8,7 +8,17 @@ const { rejectMongoOperators, sanitizeBody } = require("./middleware/sanitize");
 const { notFound, errorHandler } = require("./middleware/errorHandler");
 
 const app = express();
-app.set("trust proxy", 1); // Render berada di balik proxy; agar rate limit login membaca IP pengguna asli 
+app.set("trust proxy", 1); // vercel berada di balik proxy; agar rate limit login membaca IP pengguna asli
+const mongoose = require("mongoose");
+let dbPromise;
+app.use(async (req, res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    dbPromise ??= mongoose.connect(process.env.MONGO_URI)
+      .catch((err) => { dbPromise = null; throw err; });
+    await dbPromise;
+  }
+  next();
+}); 
 
 app.use(helmet()); // header keamanan HTTP
 app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173" })); // hanya domain frontend
