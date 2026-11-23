@@ -8,6 +8,7 @@ const { rejectMongoOperators, sanitizeBody } = require("./middleware/sanitize");
 const { notFound, errorHandler } = require("./middleware/errorHandler");
 
 const app = express();
+app.set("trust proxy", 1); // Render berada di balik proxy; agar rate limit login membaca IP pengguna asli 
 
 app.use(helmet()); // header keamanan HTTP
 app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173" })); // hanya domain frontend
