@@ -1,0 +1,9 @@
+// Halaman di dalamnya hanya untuk pengguna yang sudah login. Sekaligus memasang Layout (menu).
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import Layout from "./Layout";
+
+export default function ProtectedRoute() {
+  const { user } = useAuth();
+  return user ? <Layout /> : <Navigate to="/login" replace />;
+}

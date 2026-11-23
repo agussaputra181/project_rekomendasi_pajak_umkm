@@ -1,0 +1,88 @@
+/* src/index.css
+   Tailwind CSS v4. Semua warna & huruf diatur di blok @theme.
+   Ganti nilai di sini saja; kelas seperti bg-ink atau text-tosca otomatis mengikuti. */
+@import "tailwindcss";
+
+@theme {
+  /* Warna Universitas Primakara */
+  --color-ink: #1c2a58;        /* navy: teks utama, sidebar */
+  --color-ink-soft: #4a5578;   /* teks sekunder */
+  --color-tosca: #149fa9;      /* aksi, progres, menu aktif */
+  --color-tosca-dark: #0f7f87; /* tosca untuk teks kecil & hover (kontras lebih tinggi) */
+  --color-tosca-wash: #e3f3f4; /* latar tipis tosca */
+
+  /* Warna netral & sinyal */
+  --color-paper: #eef1f5;      /* latar halaman */
+  --color-line: #d4d9e2;       /* garis pemisah */
+  --color-warn: #a86210;       /* peringatan */
+  --color-warn-wash: #fbf1e3;
+  --color-due: #b4372b;        /* wajib / bahaya */
+  --color-ok: #2f7a4f;         /* selesai / aman */
+
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  @apply bg-paper text-ink antialiased;
+  font-size-adjust: from-font; /* huruf cadangan disamakan ukurannya selama font utama dimuat */
+  font-feature-settings: "tnum" 1; /* angka sama lebar agar nominal rapi sejajar */
+}
+
+/* Fokus keyboard selalu terlihat */
+:focus-visible {
+  outline: 2px solid var(--color-tosca);
+  outline-offset: 2px;
+}
+
+/* Tab terpilih: garis bawah tanpa mengubah ukuran tombol */
+[role="tab"] { position: relative; }
+[role="tab"][aria-selected="true"] { color: var(--color-ink); }
+[role="tab"][aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -1px 0;
+  border-block-end: 3px solid var(--color-tosca);
+}
+
+/* Dialog modal: scroll di dalam dialog tidak menggeser halaman di belakang */
+dialog:modal { overscroll-behavior: contain; }
+
+/* Popover penjelasan istilah: tampil di tengah layar, di atas konten lain */
+.term-pop::backdrop { background: rgb(28 42 88 / 0.25); }
+
+/* Menu navigasi: popover di layar sempit, sidebar tetap di layar lebar */
+#app-nav:popover-open {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: min(18rem, 85vw);
+  height: 100dvh;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: var(--color-ink);
+  color: white;
+}
+#app-nav::backdrop { background: rgb(28 42 88 / 0.5); }
+@media (min-width: 48rem) {
+  #app-nav[popover] {
+    display: flex;
+    position: sticky;
+    top: 0;
+    inset: auto;
+    width: auto;
+    height: 100vh;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+    color: white;
+  }
+}
+
+/* Cetak / simpan PDF: sembunyikan menu & tombol */
+@media print {
+  #app-nav, header.app-topbar, .no-print { display: none !important; }
+  body { background: white; }
+  main { padding: 0 !important; }
+}
